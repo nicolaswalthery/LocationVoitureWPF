@@ -9,6 +9,7 @@ namespace LocationVoitureWPF.classeMetier
     public class Categorie
     {
         public string Nom { get; set; }
+        public string AddedFieldGitTest { get; set; }
         public decimal? PrixJour { get; set; }
         public Categorie()
         {
