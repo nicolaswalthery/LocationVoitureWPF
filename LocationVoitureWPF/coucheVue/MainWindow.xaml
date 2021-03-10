@@ -1,0 +1,38 @@
+﻿<Window x:Class="LocationVoitureWPF.coucheVue.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LocationVoitureWPF"
+        mc:Ignorable="d"
+        Title="App Location - page principale" Style="{StaticResource WindowColor}" Width="1200" Height="700" WindowState="Normal" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" d:DesignWidth="1052.937">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="156*"/>
+            <RowDefinition Height="49*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.RowSpan="2">
+            <TreeView HorizontalAlignment="Left" Height="600" 
+                      Margin="10,10,0,0" Width="221">
+                <TreeViewItem Header="Gestion des clients" IsExpanded="False" >
+                    <Button Content="Lister - Ajouter - Modifier" Click="GestionClient_Click"></Button>
+                </TreeViewItem>
+                <TreeViewItem Header="Gestion des catégories" IsExpanded="False" >
+                    <Button Content="Lister - Ajouter" Click="GestionCategorie_Click"></Button>
+                </TreeViewItem>
+                <TreeViewItem Header="Gestion des modèles" IsExpanded="False" >
+                    <Button Content="Lister - Ajouter" Click="GestionModele_Click"></Button>
+                </TreeViewItem>
+                <TreeViewItem Header="Gestion des voitures" IsExpanded="False" >
+                    <Button Content="Lister - Ajouter - Supprimer" Click="GestionVoiture_Click"></Button>
+                </TreeViewItem>
+                <TreeViewItem Header="Gestion des locations" IsExpanded="False" >
+                    <Button Content="Louer - Restituer" Click="GestionLocation_Click"></Button>
+                </TreeViewItem>
+            </TreeView>
+
+        </StackPanel>
+
+        <Frame x:Name="Main" Margin="237,10,10,0" NavigationUIVisibility="Hidden" Grid.RowSpan="2"/>
+    </Grid>
+</Window>

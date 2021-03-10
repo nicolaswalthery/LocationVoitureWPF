@@ -1,0 +1,175 @@
+﻿<Page x:Class="LocationVoitureWPF.coucheVue.PageLocation"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:LocationVoitureWPF.coucheVue"
+      xmlns:validator="clr-namespace:LocationVoitureWPF.coucheVue.ValidationRules"
+      mc:Ignorable="d"
+      Title="Section Client" Height="579" Width="878">
+
+    <Page.Resources>
+        <Style x:Key="errorTemplate" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <ControlTemplate x:Key="Symbole">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontWeight="Bold"
+                           Margin="5">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+    </Page.Resources>
+
+
+    <StackPanel VerticalAlignment="Top" Height="584" >
+        <TextBlock Margin="10" Width="120" Text="Voitures disponibles" FontWeight="Bold" Foreground="WhiteSmoke"/>
+        <DataGrid ItemsSource="{Binding CollectionVoituresModelesDisponibles}"
+                  AutoGenerateColumns="False"
+                  Name="GrilleVoituresModelesDisponibles"
+                  AlternatingRowBackground="LightGray"
+                  HorizontalAlignment="Center"
+                  Height="200"
+                  Width="863"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nom du modèle" 
+                                    Binding="{Binding ModeleNom, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Marque" 
+                                    Binding="{Binding ModeleMarque, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Couleur" 
+                                    Binding="{Binding VoitureCouleur, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Immatriculation" 
+                                    Binding="{Binding VoitureImmatriculation, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Nombre de sièges" 
+                                    Binding="{Binding ModeleNbrSieges, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Nom de la catégorie" 
+                                    Binding="{Binding ModeleCategorieNom, Mode=OneWay}" 
+                                    Width="100"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock Margin="10" Width="120" Text="Voitures louées" FontWeight="Bold" Foreground="WhiteSmoke"/>
+        <DataGrid ItemsSource="{Binding CollectionVoituresModelesLouees}"
+                  AutoGenerateColumns="False"
+                  Name="GrilleVoituresModelesLouees"
+                  AlternatingRowBackground="LightGray"
+                  HorizontalAlignment="Center"
+                  Height="200"
+                  Width="863"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nom du modèle" 
+                                    Binding="{Binding ModeleNom, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Marque" 
+                                    Binding="{Binding ModeleMarque, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Couleur" 
+                                    Binding="{Binding VoitureCouleur, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Immatriculation" 
+                                    Binding="{Binding VoitureImmatriculation, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Nombre de sièges" 
+                                    Binding="{Binding ModeleNbrSieges, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Nom de la catégorie" 
+                                    Binding="{Binding ModeleCategorieNom, Mode=OneWay}" 
+                                    Width="100"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Margin="20,10,10,10" Width="120" Content="Louer" Click="Louer_Click" ></Button>
+            <Button Grid.Row="0" Grid.Column="1" Margin="20,10,10,10" Width="120" Content="Restituer" Click="Restituer_Click" ></Button>
+            <Button Grid.Row="0" Grid.Column="2" Content="{Binding Effectuer, Mode=OneWay}" Click="Effectuer_Click" Height="38" />
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Width="300" HorizontalAlignment="Left">
+            <TextBlock Margin="10" Width="120" Text="Liste des Clients" FontWeight="Bold" Foreground="WhiteSmoke"/>
+            <ComboBox x:Name="cmbListClients"   SelectedItem="{Binding ClientPicked}" 
+                                    Margin ="10" 
+                                    Width="100"
+                                    Height="18"  
+                                    BorderThickness="0"   
+                                    Padding="15,0,0,0"
+                                    Background="Transparent"  
+                                    Foreground="Black"  
+                                    IsEditable="false" 
+                                    RenderTransformOrigin="0.661,0.524"   
+                                    />
+
+            </StackPanel>
+                <!--<StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Width="282" HorizontalAlignment="Left">
+                    <TextBlock Margin="10" Width="120" Text="Date début location" FontWeight="Bold" Foreground="WhiteSmoke"/>
+                    <DatePicker  Name="tbDateLocation" DisplayDate="3/5/2010" Margin ="10" Width="120" 
+                         Validation.ErrorTemplate="{StaticResource Symbole}" >
+                        <DatePicker.SelectedDate>
+                            <Binding Path="DateLocation"
+                                 UpdateSourceTrigger="LostFocus"
+                                 ValidatesOnDataErrors="True"
+                                 ValidatesOnExceptions="True"
+                                 StringFormat="dd-MM-yyyy">
+                                --><!--<Binding.ValidationRules>
+                                    <validator:AgeValidator />
+                                </Binding.ValidationRules>--><!--
+                            </Binding>
+                        </DatePicker.SelectedDate>
+                    </DatePicker>
+                </StackPanel>-->
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Width="282" HorizontalAlignment="Left">
+                <TextBlock Margin="10" Width="120" Text="Date fin location" FontWeight="Bold" Foreground="WhiteSmoke"/>
+                <DatePicker  Name="tbDateRetour" DisplayDate="3/5/2010" Margin ="10" Width="120" 
+                     Validation.ErrorTemplate="{StaticResource Symbole}" >
+                    <DatePicker.SelectedDate>
+                        <Binding Path="DateRetour"
+                             UpdateSourceTrigger="LostFocus"
+                             ValidatesOnDataErrors="True"
+                             ValidatesOnExceptions="True"
+                             StringFormat="dd-MM-yyyy">
+                            <!--<Binding.ValidationRules>
+                                <validator:AgeValidator />
+                            </Binding.ValidationRules>-->
+                        </Binding>
+                    </DatePicker.SelectedDate>
+                </DatePicker>
+            </StackPanel>
+            
+        </Grid>
+    </StackPanel>
+</Page>

@@ -1,0 +1,251 @@
+﻿<Page x:Class="LocationVoitureWPF.coucheVue.PageClient"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:LocationVoitureWPF.coucheVue"
+      xmlns:validator="clr-namespace:LocationVoitureWPF.coucheVue.ValidationRules"
+      mc:Ignorable="d"
+      Title="Section Client" Height="579" Width="878">
+
+    <Page.Resources>
+        <Style x:Key="errorTemplate" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static
+                        RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <ControlTemplate x:Key="Symbole">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontWeight="Bold"
+                           Margin="5">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+    </Page.Resources>
+
+    <StackPanel VerticalAlignment="Top" Height="584" >
+        <DataGrid ItemsSource="{Binding CollectionClients}"
+                  AutoGenerateColumns="False"
+                  Name="GrilleClients"
+                  AlternatingRowBackground="LightGray"
+                  HorizontalAlignment="Center"
+                  Height="200"
+                  Width="863"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="IdPersonne" 
+                                    Binding="{Binding Id, Mode=OneWay}"
+                                    Width="20"/>
+                <DataGridTextColumn Header="Nom" 
+                                    Binding="{Binding Nom, Mode=OneWay}"
+                                    Width="100"/>
+                <DataGridTextColumn Header="Prenom" 
+                                    Binding="{Binding Prenom, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Date de naissance" 
+                                    Binding="{Binding DateNaissance, Mode=OneWay}" 
+                                    Width="110"/>
+                <DataGridTextColumn Header="Permis de conduire" 
+                                    Binding="{Binding NumPermisConduire, Mode=OneWay}" 
+                                    Width="117"/>
+                <DataGridTextColumn Header="Adresse" 
+                                    Binding="{Binding Adresse, Mode=OneWay}" 
+                                    Width="100"/>
+                <DataGridTextColumn Header="Pays" 
+                                    Binding="{Binding Pays, Mode=OneWay}" 
+                                    Width="70"/>
+                <DataGridTextColumn Header="Region" 
+                                    Binding="{Binding Region, Mode=OneWay}" 
+                                    Width="70"/>
+                <DataGridTextColumn Header="Ville" 
+                                    Binding="{Binding Ville, Mode=OneWay}" 
+                                    Width="70"/>
+                <DataGridTextColumn Header="CP" 
+                                    Binding="{Binding Cp, Mode=OneWay}" 
+                                    Width="25"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Margin="20,10,10,10" Width="120" Content="Ajouter" Click="Ajout_Click" ></Button>
+            <Button Grid.Row="0" Grid.Column="1" Margin="10" Width="120" Content="Modifier"  Click="Modifier_Click"  HorizontalAlignment="Center" ></Button>
+            <Button Grid.Row="0" Grid.Column="2" Content="{Binding Effectuer, Mode=OneWay}" Click="Effectuer_Click" Height="38" />
+        </Grid>
+        <StackPanel Orientation="Horizontal" Width="250" HorizontalAlignment="Left">
+            <TextBlock Margin="10" Width="120" Text="Nom" FontWeight="Bold" Foreground="WhiteSmoke"/>
+            <TextBox  Name="tbNom" Margin ="10" Width="100"
+                     Validation.ErrorTemplate="{StaticResource Symbole}"
+                     Style="{StaticResource errorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Nom"
+                             UpdateSourceTrigger="LostFocus"
+                             ValidatesOnDataErrors="True"
+                             ValidatesOnExceptions="True">
+                        <Binding.ValidationRules>
+                            <validator:MinCaracteresValidator />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Width="250" HorizontalAlignment="Left">
+            <TextBlock Margin="10" Width="120" Text="Prenom" FontWeight="Bold" Foreground="WhiteSmoke"/>
+            <TextBox Name="tbPrenom" Margin ="10" Width="100"
+                     Validation.ErrorTemplate="{StaticResource Symbole}"
+                     Style="{StaticResource errorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Prenom"
+                             UpdateSourceTrigger="LostFocus"
+                             ValidatesOnDataErrors="True"
+                             ValidatesOnExceptions="True">
+                        <Binding.ValidationRules>
+                            <validator:MinCaracteresValidator />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Width="282" HorizontalAlignment="Left">
+            <TextBlock Margin="10" Width="120" Text="Date de naissance" FontWeight="Bold" Foreground="WhiteSmoke"/>
+            <DatePicker  Name="tbDateNaissance" DisplayDate="3/5/2010" Margin ="10" Width="120" 
+                     Validation.ErrorTemplate="{StaticResource Symbole}" >
+                <DatePicker.SelectedDate>
+                    <Binding Path="DateNaissance"
+                             UpdateSourceTrigger="LostFocus"
+                             ValidatesOnDataErrors="True"
+                             ValidatesOnExceptions="True"
+                             StringFormat="dd-MM-yyyy">
+                        <Binding.ValidationRules>
+                            <validator:AgeValidator />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </DatePicker.SelectedDate>
+            </DatePicker>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Width="250" HorizontalAlignment="Left">
+            <TextBlock Margin="10" Width="120" Text="Permis de conduire" FontWeight="Bold" Foreground="WhiteSmoke"/>
+            <TextBox Name="tbNumPermisConduire" Margin ="10" Width="100"
+                     Validation.ErrorTemplate="{StaticResource Symbole}"
+                     Style="{StaticResource errorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="NumPermisConduire"
+                             UpdateSourceTrigger="LostFocus"
+                             ValidatesOnDataErrors="True"
+                             ValidatesOnExceptions="True">
+                        <!--<Binding.ValidationRules>
+                            <validator:MinCaracteresValidator />
+                        </Binding.ValidationRules>-->
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Width="250" HorizontalAlignment="Left">
+            <TextBlock Margin="10" Width="120" Text="Adresse" FontWeight="Bold" Foreground="WhiteSmoke"/>
+            <TextBox Name="tbAdresse" Margin ="10" Width="100"
+                     Validation.ErrorTemplate="{StaticResource Symbole}"
+                     Style="{StaticResource errorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Adresse"
+                             UpdateSourceTrigger="LostFocus"
+                             ValidatesOnDataErrors="True"
+                             ValidatesOnExceptions="True">
+                        <!--<Binding.ValidationRules>
+                            <validator:MinCaracteresValidator />
+                        </Binding.ValidationRules>-->
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Width="250" HorizontalAlignment="Left">
+            <TextBlock Margin="10" Width="120" Text="Code Postal" FontWeight="Bold" Foreground="WhiteSmoke"/>
+            <TextBox Name="tbCp" Margin ="10" Width="100"
+                     Validation.ErrorTemplate="{StaticResource Symbole}"
+                     Style="{StaticResource errorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Cp"
+                             UpdateSourceTrigger="LostFocus"
+                             ValidatesOnDataErrors="True"
+                             ValidatesOnExceptions="True">
+                        <Binding.ValidationRules>
+                            <validator:CodePostalValidator />
+                            <validator:RequiredFieldValidator />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Width="250" HorizontalAlignment="Left">
+            <TextBlock Margin="10" Width="120" Text="Ville" FontWeight="Bold" Foreground="WhiteSmoke"/>
+            <TextBox Name="tbVille" Margin ="10" Width="100"
+                     Validation.ErrorTemplate="{StaticResource Symbole}"
+                     Style="{StaticResource errorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Ville"
+                             UpdateSourceTrigger="LostFocus"
+                             ValidatesOnDataErrors="True"
+                             ValidatesOnExceptions="True">
+                        <Binding.ValidationRules>
+                            <validator:OnlyLettersValidator />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Width="250" HorizontalAlignment="Left">
+            <TextBlock Margin="10" Width="120" Text="Region" FontWeight="Bold" Foreground="WhiteSmoke"/>
+            <TextBox Name="tbRegion" Margin ="10" Width="100"
+                     Validation.ErrorTemplate="{StaticResource Symbole}"
+                     Style="{StaticResource errorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Region"
+                             UpdateSourceTrigger="LostFocus"
+                             ValidatesOnDataErrors="True"
+                             ValidatesOnExceptions="True">
+                        <Binding.ValidationRules>
+                            <validator:OnlyLettersValidator />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Width="250" HorizontalAlignment="Left">
+            <TextBlock Margin="10" Width="120" Text="Pays" FontWeight="Bold" Foreground="WhiteSmoke"/>
+            <TextBox Name="tbPays" Margin ="10" Width="100"
+                     Validation.ErrorTemplate="{StaticResource Symbole}"
+                     Style="{StaticResource errorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Pays"
+                             UpdateSourceTrigger="LostFocus"
+                             ValidatesOnDataErrors="True"
+                             ValidatesOnExceptions="True">
+                        <Binding.ValidationRules>
+                            <validator:OnlyLettersValidator />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+        
+    </StackPanel>
+
+</Page>

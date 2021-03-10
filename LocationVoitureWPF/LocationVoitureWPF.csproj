@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+	<ProjectTypeGuids>{60DC8134-EBA5-43B8-BCC9-BB4BC16C2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="coucheVue\PageLocation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="coucheVue\PageVoiture.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="coucheVue\PageModele.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="coucheVue\PageCategorie.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>
